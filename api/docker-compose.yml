@@ -1,0 +1,21 @@
+version: '3'
+services:
+  mongo:
+    container_name: travel-mongo
+    image: 'mongo:4.2'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=travel
+      - MONGO_INITDB_ROOT_PASSWORD=travel
+      - MONGO_INITDB_DATABASE=travel
+    volumes:
+      - ./docker/mongo:/mongo
+      - ./docker/mongo/init:/docker-entrypoint-initdb.d
+    ports:
+      - 27042:27017
+    command: mongod
+    networks:
+      - travel-network
+
+networks:
+  travel-network:
+    driver: bridge

@@ -1,0 +1,56 @@
+version: '3'
+services:
+  mongo-e2e:
+    image: 'mongo:4.2'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=test
+      - MONGO_INITDB_ROOT_PASSWORD=test
+      - MONGO_INITDB_DATABASE=travels-e2e
+    volumes:
+      - ../docker/mongo/init:/docker-entrypoint-initdb.d
+    ports:
+     - 42424:27017 # expose port 42424 for access from localhost (when debugging)
+    command: mongod
+    logging:
+      driver: none
+    networks:
+      - e2e-network
+
+  travels-e2e:
+    build:
+      context: ..
+      dockerfile: ./Dockerfile
+    env_file:
+      - ./.env
+    entrypoint: /bin/sh
+    command: >
+      -c "
+        echo Waiting for mongo-e2e service start...;
+        while ! nc -z mongo-e2e 27017;
+        do
+          sleep 1;
+        done;
+        echo Ready!;
+        node main.js"
+    logging:
+      driver: none
+    depends_on:
+      - mongo-e2e
+    networks:
+      - e2e-network
+
+  travels-e2e-test:
+    build:
+      context: ..
+      dockerfile: ./test/Dockerfile
+    env_file:
+      - ./.env
+    depends_on:
+      - travels-e2e
+    tty: true
+    networks:
+      - e2e-network
+
+networks:
+  e2e-network:
+    driver: bridge
