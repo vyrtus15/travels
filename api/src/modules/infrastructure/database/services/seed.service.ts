@@ -52,7 +52,7 @@ export class SeedService {
       password: this.configService.get<string>(ConfigKeys.managerPassword),
       firstName: 'manager',
       lastName: 'manager',
-    }, ...[RoleType.user, RoleType.manager]);
+    }, RoleType.manager);
 
     this.logger.log('Created default manager account.');
   }

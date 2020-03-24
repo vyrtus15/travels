@@ -1,11 +1,15 @@
 {
-  "name": "travel",
+  "name": "travel-app",
   "version": "1.0.0",
+  "description": "",
+  "author": "Radu Proca",
+  "license": "",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
+    "test:coverage": "ng test --codeCoverage=true",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

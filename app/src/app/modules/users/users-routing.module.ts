@@ -7,11 +7,9 @@ const usersRoutes: Routes = [
   {
     path: '',
     component: UsersComponent,
-    // canActivate: [AuthGuard],
     children: [
       {
         path: '',
-        // canActivateChild: [AuthGuard],
         children: [
           { path: 'edit/:userId', component: EditUserComponent },
         ]
@@ -22,10 +20,10 @@ const usersRoutes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forChild(usersRoutes)
+    RouterModule.forChild(usersRoutes),
   ],
   exports: [
-    RouterModule
+    RouterModule,
   ]
 })
 export class UsersRoutingModule {}

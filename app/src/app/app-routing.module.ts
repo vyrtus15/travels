@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { LoginComponent } from './modules/auth/components/login/login.component';
-import { RegisterComponent } from './modules/auth/components/register/register.component';
+import { RoleGuard } from './guards/role.guard';
+import { RoleType } from './modules/auth/interfaces/user.interface';
 
 const appRoutes: Routes = [
   {
@@ -12,12 +13,18 @@ const appRoutes: Routes = [
   {
     path: 'travels',
     loadChildren: () => import('./modules/travels/travels.module').then(m => m.TravelsModule),
-    // canLoad: [AuthGuard]
+    canActivate: [RoleGuard],
+    data: {
+      roles: [RoleType.user, RoleType.admin],
+    },
   },
   {
     path: 'users',
     loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule),
-    // canLoad: [AuthGuard]
+    canActivate: [RoleGuard],
+    data: {
+      roles: [RoleType.manager, RoleType.admin],
+    },
   },
   { path: '**', component: PageNotFoundComponent }
 ];
@@ -27,7 +34,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       {
-        enableTracing: false, // <-- debugging purposes only
+        enableTracing: !environment.production,
       }
     )
   ],

@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpService } from 'src/app/services/http/http.service';
+import { Register } from '../../interfaces/register.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterService {
-  private readonly baseUrl = environment.api;
 
   constructor(
-    private readonly http: HttpClient,
+    private readonly httpService: HttpService,
   ) { }
 
-  register(user) {
-    const url = `${this.baseUrl}auth/register`;
-    return this.http.post(url, user);
+  register(user: Register) {
+    return this.httpService.post('auth/register', user);
   }
 }
