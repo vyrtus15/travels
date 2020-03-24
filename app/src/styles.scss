@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.content-center {
+  justify-content: center;
+}
+
+.link {
+  color: gray;
+  text-decoration: none;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.card {
+  min-width: 120px;
+  max-width: 400px;
+  margin: 20px auto;
+}

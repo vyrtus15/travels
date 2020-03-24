@@ -2,6 +2,7 @@ import { ClassSerializerInterceptor, INestApplication, ValidationPipe } from '@n
 import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as cors from 'cors';
 import * as helmet from 'helmet';
 import { ConfigKeys, ProductionEnvironment } from './common/constants';
 import { CustomExceptionsFilter } from './filters/exception.filter';
@@ -10,6 +11,10 @@ import { AppModule } from './modules/app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.use(cors({
+    origin: 'http://localhost:4200',
+  }));
 
   app.use(helmet());
 
