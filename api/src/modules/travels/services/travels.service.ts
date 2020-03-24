@@ -7,10 +7,10 @@ import { PageResult } from '../../../interfaces/pageResult.interface';
 import { PageSearch } from '../../../interfaces/pageSearch.interface';
 import { QueryService } from '../../infrastructure/database/services/query.service';
 import { AddTravelDto } from '../dto/addTravel.dto';
+import { SearchTravelDto } from '../dto/searchTravel.dto';
 import { TravelDto } from '../dto/travel.dto';
 import { UpdateTravelDto } from '../dto/updateTravel.dto';
 import { Travel } from '../schema/travel.interface';
-import { PageDto } from '../../../dto/page.dto';
 
 @Injectable()
 export class TravelsService {
@@ -21,11 +21,14 @@ export class TravelsService {
     @InjectModel(SchemaNames.Travels) private readonly travelsModel: Model<Travel>,
   ) { }
 
-  async find(pagination: PageDto, userId: string): Promise<PageResult<TravelDto>> {
+  async find(search: SearchTravelDto, userId: string): Promise<PageResult<TravelDto>> {
     const filter: PageSearch = {
-      ...pagination,
+      ...search,
       sort: TravelsService.DEFAULT_SORT_FIELD,
-      condition: { userId },
+      condition: {
+        userId,
+        ...this.getSearchConditions(search),
+      },
     };
 
     const page = await this.queryService.page(this.travelsModel, filter);
@@ -80,5 +83,34 @@ export class TravelsService {
     }
 
     return travel;
+  }
+
+  private getSearchConditions(search: SearchTravelDto) {
+    let condition = {};
+
+    if (search.destination) {
+      condition = {
+        ...condition,
+        $text: { $search: search.destination },
+      };
+    }
+
+    // trip.endDate >= startDate
+    if (search.startDate) {
+      condition = {
+        ...condition,
+        endDate: { $gte: search.startDate },
+      };
+    }
+
+    // trip.startDate <= endDate
+    if (search.endDate) {
+      condition = {
+        ...condition,
+        startDate: { $lte: search.endDate },
+      };
+    }
+
+    return condition;
   }
 }

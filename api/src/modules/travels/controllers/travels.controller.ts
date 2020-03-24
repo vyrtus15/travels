@@ -8,10 +8,10 @@ import { AuthOwnUser } from '../../users/authorization/auth.decorator';
 import { UserDto } from '../../users/dto/user.dto';
 import { AuthTravel } from '../authorization/authTravel.decorator';
 import { AddTravelDto } from '../dto/addTravel.dto';
+import { SearchTravelDto } from '../dto/searchTravel.dto';
 import { TravelDto } from '../dto/travel.dto';
 import { UpdateTravelDto } from '../dto/updateTravel.dto';
 import { TravelsService } from '../services/travels.service';
-import { PageDto } from '../../../dto/page.dto';
 
 @ApiTags('travels')
 @ApiBearerAuth()
@@ -26,7 +26,7 @@ export class TravelsController {
   @ApiPageOkResponse(TravelDto)
   @ApiTravelsForbiddenResponse()
   @Get()
-  async search(@Query() filter: PageDto, @AuthOwnUser('user') user: UserDto): Promise<PageResult<TravelDto>> {
+  async search(@Query() filter: SearchTravelDto, @AuthOwnUser('user') user: UserDto): Promise<PageResult<TravelDto>> {
     return await this.travelsService.find(filter, user.id);
   }
 

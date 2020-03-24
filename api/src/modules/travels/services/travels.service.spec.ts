@@ -4,9 +4,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { mockEntity, mockFilteredQuery, mockQuery } from '../../../../test/helpers/utils.jest';
 import { SchemaNames } from '../../../common/schemas';
 import { QueryService } from '../../infrastructure/database/services/query.service';
+import { SearchTravelDto } from '../dto/searchTravel.dto';
 import { TravelDto } from '../dto/travel.dto';
 import { TravelsService } from './travels.service';
-import { PageDto } from '../../../dto/page.dto';
 
 describe('Travels Service', () => {
   let service: TravelsService;
@@ -50,19 +50,40 @@ describe('Travels Service', () => {
 
   describe('find', () => {
     it('should return an array of class instances', async () => {
-      expect((await service.find({} as PageDto, '123')).items[0]).toBeInstanceOf(TravelDto);
+      expect((await service.find({} as SearchTravelDto, '123')).items[0]).toBeInstanceOf(TravelDto);
     });
 
     it('should apply `userId` filtering', async () => {
       mockFilteredQuery(model.find, {}, {}, {});
-      await service.find({} as PageDto, '123');
+      await service.find({} as SearchTravelDto, '123');
 
       expect((queryService.page as jest.Mock).mock.calls[0][1].condition).toEqual({ userId: '123' });
     });
 
+    it('should apply `destination` filtering', async () => {
+      mockFilteredQuery(model.find, {}, {}, {});
+      await service.find({ destination: '42' } as SearchTravelDto, '123');
+
+      expect((queryService.page as jest.Mock).mock.calls[0][1].condition).toEqual({ userId: '123', $text: { $search: '42' } });
+    });
+
+    it('should apply `startDate` filtering', async () => {
+      mockFilteredQuery(model.find, {}, {}, {});
+      await service.find({ startDate: new Date('2020-04-25') } as SearchTravelDto, '123');
+
+      expect((queryService.page as jest.Mock).mock.calls[0][1].condition).toEqual({ userId: '123', endDate: { $gte: new Date('2020-04-25') } });
+    });
+
+    it('should apply `endDate` filtering', async () => {
+      mockFilteredQuery(model.find, {}, {}, {});
+      await service.find({ endDate: new Date('2020-04-24') } as SearchTravelDto, '123');
+
+      expect((queryService.page as jest.Mock).mock.calls[0][1].condition).toEqual({ userId: '123', startDate: { $lte: new Date('2020-04-24') }, });
+    });
+
     it('should apply the default sorting', async () => {
       mockFilteredQuery(model.find, {}, {}, {});
-      await service.find({} as PageDto, '123');
+      await service.find({} as SearchTravelDto, '123');
 
       expect((queryService.page as jest.Mock).mock.calls[0][1].sort).toEqual(TravelsService.DEFAULT_SORT_FIELD);
     });

@@ -81,6 +81,19 @@ describe('/:userId/travels (e2e)', () => {
       expect(response.data?.items?.length).toBe(1);
     });
 
+    it.each([
+      `destination=one`,
+      `startDate=2020-03-20T12:12:12.121Z`,
+      `endDate=2020-03-20T12:12:12.121Z`,
+      `startDate=2020-03-20T12:12:12.121Z&endDate=2020-03-20T12:12:12.121Z`,
+      `destination=one&endDate=2020-03-20T12:12:12.121Z`,
+      `destination=one&startDate=2020-03-20T12:12:12.121Z`,
+      `destination=one&startDate=2020-03-20T12:12:12.121Z&endDate=2020-03-20T12:12:12.121Z`,
+    ])('should support query `%s`', async (query) => {
+      const response = await axios.get(`user/${user.id}/travels?${query}`, createAuthOptions(admin));
+
+      expect(response.status).toBe(200);
+    });
   });
 
   describe('/:id (PUT)', () => {

@@ -35,3 +35,5 @@ export const TravelSchema = new Schema<Travel>({
     type: String,
   },
 });
+
+TravelSchema.index({ destination: 'text' }, { default_language: 'none' });
