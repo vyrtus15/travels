@@ -28,9 +28,7 @@ export class TravelsDatasourceService {
           return this.travelsService.get(options.userId, options.paginator.pageIndex + 1, filter);
         }),
         map((data: TravelResponse) => this.travelsService.map(data)),
-        catchError(() => {
-          return of({ items: [], total: 0 });
-        }),
+        catchError(() => of({ items: [], total: 0 })),
       );
   }
 

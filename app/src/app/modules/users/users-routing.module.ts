@@ -6,16 +6,12 @@ import { UsersComponent } from './components/users/users.component';
 const usersRoutes: Routes = [
   {
     path: '',
-    component: UsersComponent,
-    children: [
-      {
-        path: '',
-        children: [
-          { path: 'edit/:userId', component: EditUserComponent },
-        ]
-      }
-    ]
-  }
+    component: UsersComponent
+  },
+  {
+    path: ':userId/edit',
+    component: EditUserComponent,
+  },
 ];
 
 @NgModule({
@@ -26,4 +22,4 @@ const usersRoutes: Routes = [
     RouterModule,
   ]
 })
-export class UsersRoutingModule {}
+export class UsersRoutingModule { }

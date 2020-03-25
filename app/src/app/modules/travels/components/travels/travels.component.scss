@@ -1,22 +1,5 @@
-.spacing-10 {
-  margin: 0 10px;
-}
 .add-button {
   margin: 10px;
-}
-
-.print-only {
-  display: none;
-}
-
-@media print {
-  .no-print {
-    display: none;
-  }
-
-  .print-only {
-    display: block;
-  }
 }
 
 .filters {

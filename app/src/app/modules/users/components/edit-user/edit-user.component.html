@@ -1,1 +1,68 @@
-<p>edit-user works!</p>
+<div>
+    <button
+        mat-button
+        (click)="back()"
+    >
+        <i class="material-icons">arrow_back</i>
+        Back to user list
+    </button>
+</div>
+<form
+    *ngIf="editUserForm"
+    [formGroup]="editUserForm"
+    novalidate
+    (ngSubmit)="submit()"
+>
+    <mat-card class="card">
+        <mat-card-header class="content-center">
+            <mat-card-title>Edit User</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <mat-form-field class="full-width">
+                    <input
+                        matInput
+                        placeholder="Username"
+                        [value]="item.userName"
+                        disabled
+                    >
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="full-width">
+                    <input
+                        matInput
+                        placeholder="First name"
+                        formControlName="firstName"
+                        required
+                        autofocus
+                    >
+                    <mat-error *ngIf="editUserForm.controls['firstName'].hasError('required')">First name is required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="full-width">
+                    <input
+                        matInput
+                        placeholder="Last name"
+                        formControlName="lastName"
+                        required
+                    >
+                    <mat-error *ngIf="editUserForm.controls['lastName'].hasError('required')">Last name is required</mat-error>
+                </mat-form-field>
+            </div>
+
+        </mat-card-content>
+        <mat-card-actions>
+            <button
+                mat-raised-button
+                color="primary"
+                type="submit"
+            >
+                Update
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</form>
