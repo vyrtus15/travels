@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpService } from 'src/app/services/http/http.service';
-import { TravelsService } from './travels.service';
+import { TravelsDatasourceService } from './travels-datasource.service';
 
-describe('TravelsService', () => {
-  let service: TravelsService;
+describe('TravelsDatasourceService', () => {
+  let service: TravelsDatasourceService;
 
   const httpServiceSpy = jasmine.createSpyObj<HttpService>('HttpService', ['get', 'post', 'put', 'delete']);
 
@@ -13,7 +13,7 @@ describe('TravelsService', () => {
         { provide: HttpService, useValue: httpServiceSpy },
       ],
     });
-    service = TestBed.inject(TravelsService);
+    service = TestBed.inject(TravelsDatasourceService);
   });
 
   it('should be created', () => {

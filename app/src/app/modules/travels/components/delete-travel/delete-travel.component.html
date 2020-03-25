@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Delete travel</h1>
+<div mat-dialog-content>
+    <p>
+        Are you sure, you want to delete travel with
+        <b>{{data?.travel?.destination}}</b>
+        destination?
+    </p>
+</div>
+<div mat-dialog-actions>
+    <button
+        mat-button
+        (click)="onNoClick()"
+    >
+        No
+    </button>
+    <button
+        mat-button
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+    >
+        Yes
+    </button>
+</div>

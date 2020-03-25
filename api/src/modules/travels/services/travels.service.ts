@@ -14,7 +14,7 @@ import { Travel } from '../schema/travel.interface';
 
 @Injectable()
 export class TravelsService {
-  public static readonly DEFAULT_SORT_FIELD = '-startDate';
+  public static readonly DEFAULT_SORT_FIELD = 'startDate';
 
   constructor(
     private readonly queryService: QueryService,
