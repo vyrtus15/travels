@@ -11,7 +11,7 @@ import { TravelsService } from '../../services/travels/travels.service';
   templateUrl: './edit-travel.component.html',
   styleUrls: ['./edit-travel.component.scss']
 })
-export class EditTravelComponent implements AfterViewInit {
+export class EditTravelComponent implements OnInit {
   public item: TravelsItem;
 
   editTravelForm: FormGroup;
@@ -26,17 +26,18 @@ export class EditTravelComponent implements AfterViewInit {
     this.item = this.router.getCurrentNavigation()?.extras?.state as TravelsItem;
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     if (!this.item) {
       this.router.navigate(['travels', this.activatedRoute.snapshot.paramMap.get('userId')]);
-    } else {
-      this.editTravelForm = this.formBuilder.group({
-        destination: [this.item.destination, Validators.required],
-        startDate: [moment(this.item.startDate).toDate(), Validators.required],
-        endDate: [moment(this.item.endDate).toDate(), Validators.required],
-        comment: [this.item.comment],
-      });
+      return;
     }
+
+    this.editTravelForm = this.formBuilder.group({
+      destination: [this.item.destination, Validators.required],
+      startDate: [moment(this.item.startDate).toDate(), Validators.required],
+      endDate: [moment(this.item.endDate).toDate(), Validators.required],
+      comment: [this.item.comment],
+    });
   }
 
   submit() {

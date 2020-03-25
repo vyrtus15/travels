@@ -18,3 +18,12 @@
     display: block;
   }
 }
+
+.filters {
+  &--container {
+    display: flex;
+  }
+  &--filter {
+    margin-left: 15px;
+  }
+}

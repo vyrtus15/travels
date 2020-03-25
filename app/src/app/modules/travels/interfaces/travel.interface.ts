@@ -23,3 +23,9 @@ export interface MappedTravels {
     items: DisplayTravel[];
     total: number;
 }
+
+export interface TravelFilter {
+    destination: string;
+    startDate: Date | string;
+    endDate: Date | string;
+}

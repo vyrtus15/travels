@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { DisplayTravel, MappedTravels } from '../../interfaces/travel.interface';
+import { DisplayTravel, MappedTravels, TravelFilter } from '../../interfaces/travel.interface';
 import { TravelsDatasourceService } from '../../services/travels-datasource/travels-datasource.service';
 import { TravelsService } from '../../services/travels/travels.service';
 import { DeleteTravelComponent } from '../delete-travel/delete-travel.component';
@@ -25,6 +25,13 @@ export class TravelsComponent implements AfterViewInit {
 
   printInfo: DisplayTravel[];
 
+  filter: TravelFilter = {
+    destination: null,
+    startDate: null,
+    endDate: null,
+  };
+
+  private filter$ = new Subject();
   private forceUpdate$ = new Subject();
 
   constructor(
@@ -39,7 +46,7 @@ export class TravelsComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.travelsDatasourceService.create({
-      sources: [this.paginator.page, this.forceUpdate$],
+      sources: [this.paginator.page, this.filter$, this.forceUpdate$],
       paginator: this.paginator,
       userId: this.userId,
     })
@@ -72,6 +79,14 @@ export class TravelsComponent implements AfterViewInit {
         this.travelsService.delete(this.userId, item.id)
           .subscribe(() => this.forceUpdate$.next());
       });
+  }
+
+  filterUpdate(key: string, value) {
+    this.filter[key] = value;
+  }
+
+  applyFilter() {
+    this.filter$.next(this.filter);
   }
 
   print() {

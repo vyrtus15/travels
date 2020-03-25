@@ -20,6 +20,63 @@
     </button>
 </div>
 
+<div class="no-print spacing-10">
+    <h3>Filters</h3>
+    <div class="filters--container">
+        <div class="filters--filter">
+            <mat-form-field>
+                <input
+                    matInput
+                    placeholder="Destination"
+                    (change)="filterUpdate('destination', $event.target.value)"
+                >
+            </mat-form-field>
+        </div>
+        <div class="filters--filter">
+            <mat-form-field>
+                <mat-label>Start date</mat-label>
+                <input
+                    matInput
+                    [matDatepicker]="startDatePicker"
+                    (dateChange)="filterUpdate('startDate', $event.value)"
+                >
+                <mat-datepicker-toggle
+                    matSuffix
+                    [for]="startDatePicker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #startDatePicker></mat-datepicker>
+            </mat-form-field>
+
+        </div>
+
+        <div class="filters--filter">
+            <mat-form-field>
+                <mat-label>End date</mat-label>
+                <input
+                    matInput
+                    [matDatepicker]="endDatePicker"
+                    (dateChange)="filterUpdate('endDate', $event.value)"
+                >
+                <mat-datepicker-toggle
+                    matSuffix
+                    [for]="endDatePicker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+            </mat-form-field>
+
+        </div>
+        <div class="filters--filter">
+            <button
+                mat-raised-button
+                (click)="applyFilter()"
+            >
+                <i class="material-icons">search</i>
+                Search
+            </button>
+        </div>
+    </div>
+</div>
+
 <div class="mat-elevation-z8 spacing-10 no-print">
     <table
         mat-table
