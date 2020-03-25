@@ -4,8 +4,8 @@ export interface TravelsItem {
     userId: string;
     destination: string;
     comment: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: Date | string;
+    endDate: Date | string;
 }
 
 export interface DisplayTravel extends TravelsItem {
@@ -17,4 +17,9 @@ export interface TravelResponse {
     total: number;
     limit: number;
     page: number;
+}
+
+export interface MappedTravels {
+    items: DisplayTravel[];
+    total: number;
 }

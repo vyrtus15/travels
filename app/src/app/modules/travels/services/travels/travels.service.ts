@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { HttpService } from 'src/app/services/http/http.service';
-import { TravelsItem } from '../../interfaces/travel.interface';
+import { MappedTravels, TravelResponse, TravelsItem } from '../../interfaces/travel.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +28,37 @@ export class TravelsService {
 
   delete(userId: string, travelId: string) {
     return this.httpService.delete(`user/${userId}/travels/${travelId}`);
+  }
+
+  getPrintDetails(userId: string): Observable<MappedTravels> {
+    return this.httpService.get(`user/${userId}/travels?page=${1}&limit=100`, {
+      endDate: moment().add(1, 'month').toISOString(),
+    }).pipe(
+      map((data: TravelResponse) => this.map(data)),
+    );
+  }
+
+  public map(data: TravelResponse): MappedTravels {
+    return {
+      items: data.items.map(item => ({
+        ...item,
+        daysLeft: this.countDaysTillTrip(item),
+        startDate: this.prettyDate(item.startDate as Date),
+        endDate: this.prettyDate(item.endDate as Date),
+      })),
+      total: data.total,
+    };
+  }
+
+  private countDaysTillTrip(trip: TravelsItem) {
+    const tripDate = moment(trip.startDate);
+    const today = moment();
+
+    const daysLeft = tripDate.diff(today, 'days');
+    return daysLeft >= 0 ? daysLeft : 0;
+  }
+
+  private prettyDate(date: Date) {
+    return moment(date).format('LL');
   }
 }

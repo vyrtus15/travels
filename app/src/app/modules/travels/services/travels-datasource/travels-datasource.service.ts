@@ -24,31 +24,11 @@ export class TravelsDatasourceService {
       .pipe(
         startWith({}),
         switchMap(() => this.travelsService.get(options.userId, options.paginator.pageIndex + 1)),
-        map((data: TravelResponse) => ({
-          items: data.items.map(item => ({
-            ...item,
-            startDate: this.prettyDate(item.startDate),
-            endDate: this.prettyDate(item.endDate),
-            daysLeft: this.countDaysTillTrip(item)
-          })),
-          total: data.total,
-        })),
+        map((data: TravelResponse) => this.travelsService.map(data)),
         catchError(() => {
           return of({ items: [], total: 0 });
         }),
       );
   }
 
-
-  private countDaysTillTrip(trip: TravelsItem) {
-    const tripDate = moment(trip.startDate);
-    const today = moment();
-
-    const daysLeft = tripDate.diff(today, 'days');
-    return daysLeft >= 0 ? daysLeft : 0;
-  }
-
-  private prettyDate(date: Date) {
-    return moment(date).format('LLL');
-  }
 }

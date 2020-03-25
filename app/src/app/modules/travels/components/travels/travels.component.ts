@@ -2,12 +2,11 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
-import { merge, of, Subject } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { DisplayTravel, TravelResponse, TravelsItem } from '../../interfaces/travel.interface';
+import { Subject } from 'rxjs';
+import { DisplayTravel, MappedTravels } from '../../interfaces/travel.interface';
+import { TravelsDatasourceService } from '../../services/travels-datasource/travels-datasource.service';
 import { TravelsService } from '../../services/travels/travels.service';
 import { DeleteTravelComponent } from '../delete-travel/delete-travel.component';
-import { TravelsDatasourceService } from '../../services/travels-datasource/travels-datasource.service';
 
 @Component({
   selector: 'app-travels',
@@ -16,12 +15,15 @@ import { TravelsDatasourceService } from '../../services/travels-datasource/trav
 })
 export class TravelsComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  displayedColumns = ['destination', 'startDate', 'endDate', 'daysLeft', 'comment', 'edit', 'remove'];
+  printColumns = ['destination', 'startDate', 'endDate', 'daysLeft', 'comment'];
 
   items: DisplayTravel[];
   totalItems = 0;
 
   userId: string;
-  displayedColumns = ['destination', 'startDate', 'endDate', 'daysLeft', 'comment', 'edit', 'remove'];
+
+  printInfo: DisplayTravel[];
 
   private forceUpdate$ = new Subject();
 
@@ -73,7 +75,15 @@ export class TravelsComponent implements AfterViewInit {
   }
 
   print() {
+    this.travelsService.getPrintDetails(this.userId)
+      .subscribe(({ items }: MappedTravels) => this.handlePrintFetch(items));
+  }
 
+  private handlePrintFetch(items: DisplayTravel[]) {
+    this.printInfo = items;
+    setTimeout(() => {
+      window.print();
+    });
   }
 
 }
