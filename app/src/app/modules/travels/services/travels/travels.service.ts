@@ -31,11 +31,15 @@ export class TravelsService {
   }
 
   getPrintDetails(userId: string): Observable<MappedTravels> {
-    return this.httpService.get(`user/${userId}/travels?page=${1}&limit=100`, {
+    return this.httpService.get(`user/${userId}/travels?page=1&limit=100`, {
       endDate: moment().add(1, 'month').toISOString(),
     }).pipe(
       map((data: TravelResponse) => this.map(data)),
     );
+  }
+
+  print() {
+    window.print();
   }
 
   public map(data: TravelResponse): MappedTravels {

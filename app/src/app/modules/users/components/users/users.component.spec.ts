@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { UsersDatasourceService } from '../../services/users-datasource/users-datasource.service';
 import { UsersService } from '../../services/users/users.service';
 import { UsersComponent } from './users.component';
+import { of } from 'rxjs';
+import { UserItem } from '../../interfaces/users.interface';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -47,5 +49,31 @@ describe('UsersComponent', () => {
 
   it('should compile', () => {
     expect(component).toBeTruthy();
+  });
+
+
+  it('should navigate on view', () => {
+    const user = { id: '42' } as UserItem;
+
+    component.view(user);
+
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['travels', user.id]);
+  });
+
+  it('should navigate on edit', () => {
+    const user = { id: '42' } as UserItem;
+
+    component.edit(user);
+
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['users', user.id, 'edit'], { state: user });
+  });
+
+  it('should create datasource after view init', () => {
+    usersDatasourceServiceSpy.create.and.returnValue(of({} as any));
+    component.paginator = { page: 0 } as any;
+
+    component.ngAfterViewInit();
+
+    expect(usersDatasourceServiceSpy.create).toHaveBeenCalled();
   });
 });

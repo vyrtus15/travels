@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MemoryHealthIndicator, MicroserviceHealthIndicator, MongooseHealthIndicator, TerminusModule } from '@nestjs/terminus';
+import { MemoryHealthIndicator, MongooseHealthIndicator, TerminusModule } from '@nestjs/terminus';
 import { TerminusOptionsService } from './terminusOptions.service';
 
 @Module({
@@ -11,8 +11,8 @@ import { TerminusOptionsService } from './terminusOptions.service';
       inject: [
         ConfigService,
         MongooseHealthIndicator,
-        MicroserviceHealthIndicator,
-        MemoryHealthIndicator],
+        MemoryHealthIndicator,
+      ],
       useClass: TerminusOptionsService,
     }),
   ],

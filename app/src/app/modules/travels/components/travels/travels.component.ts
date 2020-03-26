@@ -97,7 +97,7 @@ export class TravelsComponent implements AfterViewInit {
   private handlePrintFetch(items: DisplayTravel[]) {
     this.printInfo = items;
     setTimeout(() => {
-      window.print();
+      this.travelsService.print();
     });
   }
 
