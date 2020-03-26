@@ -71,4 +71,10 @@ describe('AuthService', () => {
     });
   });
 
+  it('should remove auth on logout', async () => {
+    await service.logout();
+
+    expect(storageServiceSpy.set).toHaveBeenCalledWith('app-auth', null);
+  });
+
 });

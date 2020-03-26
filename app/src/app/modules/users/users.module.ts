@@ -8,10 +8,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
+import { DeleteUserComponent } from './components/delete-user/delete-user.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { UsersComponent } from './components/users/users.component';
 import { UsersRoutingModule } from './users-routing.module';
-import { DeleteUserComponent } from './components/delete-user/delete-user.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { DeleteUserComponent } from './components/delete-user/delete-user.compon
     MatDialogModule,
     ReactiveFormsModule,
     UsersRoutingModule,
+    SharedModule,
   ],
   declarations: [
     UsersComponent,

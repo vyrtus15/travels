@@ -3,15 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AuthModule } from './modules/auth/auth.module';
+import { SharedModule } from './modules/shared/shared.module';
 import { TravelsModule } from './modules/travels/travels.module';
 import { UsersModule } from './modules/users/users.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -20,6 +19,7 @@ import { UsersModule } from './modules/users/users.module';
     AuthModule,
     UsersModule,
     TravelsModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

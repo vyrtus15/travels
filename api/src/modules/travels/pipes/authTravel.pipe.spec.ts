@@ -36,12 +36,12 @@ describe('AuthTravel Pipe', () => {
     expect(await pipe.transform(['user-2', 'abc'], undefined)).toMatchObject({ id: 'abc' });
   });
 
-  it('should throw when is `moderator`', async () => {
-    request.user = { id: 'moderator', roles: [RoleType.manager] };
+  it('should throw when is `manager`', async () => {
+    request.user = { id: 'manager', roles: [RoleType.manager] };
 
     jest.spyOn(travelsService, 'findOne').mockImplementation(async () => ({ id: 'abc' } as any));
 
-    await expect(pipe.transform(['moderator', 'abc'], undefined)).rejects.toBeInstanceOf(ForbiddenException);
+    await expect(pipe.transform(['manager', 'abc'], undefined)).rejects.toBeInstanceOf(ForbiddenException);
   });
 
   it('should throw when is `user` and access another `user` travel', async () => {

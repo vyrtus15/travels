@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RoleGuard } from './guards/role.guard';
 import { RoleType } from './modules/auth/interfaces/user.interface';
+import { PageNotFoundComponent } from './modules/shared/components/page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
   {

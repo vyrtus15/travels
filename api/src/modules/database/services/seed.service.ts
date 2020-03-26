@@ -2,10 +2,10 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { PassportLocalModel } from 'mongoose';
-import { ConfigKeys } from '../../../../common/constants';
-import { RoleType } from '../../../../common/roleType';
-import { AuthService } from '../../../auth/services/auth.service';
-import { User } from '../../../users/schema/user.interface';
+import { ConfigKeys } from '../../../common/constants';
+import { RoleType } from '../../../common/roleType';
+import { AuthService } from '../../auth/services/auth.service';
+import { User } from '../../users/schema/user.interface';
 
 @Injectable()
 export class SeedService {

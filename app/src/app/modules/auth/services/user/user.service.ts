@@ -20,6 +20,10 @@ export class UserService {
     return this.user;
   }
 
+  remove() {
+    this.user = null;
+  }
+
   private fetchUser() {
     return this.httpService.get('user/me').toPromise() as Promise<User>;
   }

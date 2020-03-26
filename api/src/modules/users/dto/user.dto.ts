@@ -4,7 +4,7 @@ import { RoleType } from '../../../common/roleType';
 
 @Exclude()
 export class UserDto {
-  static readonly emailMaxLength = 100;
+  static readonly userNameMaxLength = 100;
   static readonly firstNameMaxLength = 100;
   static readonly lastNameMaxLength = 100;
 
@@ -27,8 +27,4 @@ export class UserDto {
   @ApiProperty({ enum: RoleType.all(), isArray: true })
   @Expose()
   roles: RoleType[];
-
-  @ApiProperty()
-  @Expose()
-  createdOn: Date;
 }

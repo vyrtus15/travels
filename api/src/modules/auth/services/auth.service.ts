@@ -9,7 +9,7 @@ import { User } from '../../users/schema/user.interface';
 import { UsersService } from '../../users/services/users.service';
 import { AccessTokenDto } from '../dto/accessToken.dto';
 import { RegisterUserDto } from '../dto/registerUser.dto';
-import { JwtPayload } from '../strategies/jwtPayload.interface';
+import { JwtPayload } from '../interfaces/jwtPayload.interface';
 
 @Injectable()
 export class AuthService {
@@ -43,7 +43,7 @@ export class AuthService {
     };
 
     const accessToken = await this.jwtService.signAsync(payload);
-    return new AccessTokenDto(accessToken, user);
+    return new AccessTokenDto(accessToken, user.id);
   }
 
   async register(user: RegisterUserDto, ...roles: RoleType[]) {

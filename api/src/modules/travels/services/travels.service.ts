@@ -5,7 +5,7 @@ import { Document, Model } from 'mongoose';
 import { SchemaNames } from '../../../common/schemas';
 import { PageResult } from '../../../interfaces/pageResult.interface';
 import { PageSearch } from '../../../interfaces/pageSearch.interface';
-import { QueryService } from '../../infrastructure/database/services/query.service';
+import { QueryService } from '../../database/services/query.service';
 import { AddTravelDto } from '../dto/addTravel.dto';
 import { SearchTravelDto } from '../dto/searchTravel.dto';
 import { TravelDto } from '../dto/travel.dto';

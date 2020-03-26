@@ -11,15 +11,15 @@ import { AppModule } from './modules/app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const reflector = app.get(Reflector);
+  const configService = app.get(ConfigService);
 
   app.use(cors({
-    origin: 'http://localhost:4200',
+    origin: configService.get(ConfigKeys.corsWhitelist),
   }));
 
   app.use(helmet());
 
-  const reflector = app.get(Reflector);
-  const configService = app.get(ConfigService);
   const isProduction = configService.get<string>(ConfigKeys.nodeEnv) === ProductionEnvironment;
   const { httpAdapter } = app.get(HttpAdapterHost);
 

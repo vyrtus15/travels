@@ -28,14 +28,6 @@ export const ApiTravelsForbiddenResponse: () => MethodDecorator =
     (target, propertyKey, descriptor) =>
       ApiForbiddenResponse({ description: 'Insufficient rights to access the user\'s travels record(s).' })(target, propertyKey, descriptor);
 
-export const ApiSortProperty: (options: ApiPropertyOptions) => PropertyDecorator =
-  (options) =>
-    (target, propertyKey) =>
-      ApiPropertyOptional({
-        description: 'Sort field. A `-` sign in front of the field indicates descending order.',
-        ...options,
-      })(target, propertyKey);
-
 export const ApiPageOkResponse: (itemType) => MethodDecorator =
   (itemType) =>
     (target, propertyKey, descriptor) => ApiOkResponse({

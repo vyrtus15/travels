@@ -33,10 +33,8 @@ describe('Role Guard', () => {
   });
 
   it.each([
-    [[], []],
     [[RoleType.user], [RoleType.user]],
     [[RoleType.manager, RoleType.user], []],
-    [[], [RoleType.admin, RoleType.user]],
     [[RoleType.manager, RoleType.user], [RoleType.admin, RoleType.user]],
   ])('should pass when any of the `roles` are contained', (handlerRoles, classRoles) => {
     jest.spyOn(reflectorMock, 'get').mockReturnValueOnce(handlerRoles);
@@ -52,6 +50,7 @@ describe('Role Guard', () => {
     [{ user: { roles: [RoleType.user, RoleType.manager] } }, RoleType.admin],
   ])('should not pass when user %p has no role %s', (user, requiredRole) => {
     jest.spyOn(reflectorMock, 'get').mockReturnValue([requiredRole]);
+
     getRequestMock.mockReturnValue(user);
 
     expect(guard.canActivate(contextMock)).toBe(false);
@@ -63,6 +62,7 @@ describe('Role Guard', () => {
   ])('should not pass when some of the `roles` are not contained', (handlerRoles, classRoles) => {
     jest.spyOn(reflectorMock, 'get').mockReturnValueOnce(handlerRoles);
     jest.spyOn(reflectorMock, 'get').mockReturnValueOnce(classRoles);
+
     getRequestMock.mockReturnValue({ user: { roles: [RoleType.admin] } });
 
     expect(guard.canActivate(contextMock)).toBe(false);

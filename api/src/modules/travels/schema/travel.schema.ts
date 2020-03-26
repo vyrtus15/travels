@@ -37,3 +37,5 @@ export const TravelSchema = new Schema<Travel>({
 });
 
 TravelSchema.index({ destination: 'text' }, { default_language: 'none' });
+TravelSchema.index({ startDate: 1 });
+TravelSchema.index({ endDate: 1 });

@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Model } from 'mongoose';
-import { mockEntity, mockFilteredQuery } from '../../../../../test/helpers/utils.jest';
+import { mockEntity, mockFilteredQuery } from '../../../../test/helpers/utils.jest';
 import { QueryService } from './query.service';
 
 describe('Query Service', () => {

@@ -1,9 +1,9 @@
 import { ConfigService } from '@nestjs/config';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService } from '../../../auth/services/auth.service';
+import { AuthService } from '../../auth/services/auth.service';
 import { SeedService } from './seed.service';
-import { mockQuery } from '../../../../../test/helpers/utils.jest';
+import { mockQuery } from '../../../../test/helpers/utils.jest';
 
 describe('Seed Service', () => {
   let authService: AuthService;

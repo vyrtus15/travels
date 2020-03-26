@@ -16,6 +16,7 @@ import { DeleteTravelComponent } from './components/delete-travel/delete-travel.
 import { EditTravelComponent } from './components/edit-travel/edit-travel.component';
 import { TravelsComponent } from './components/travels/travels.component';
 import { TravelsRoutingModule } from './travels-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { TravelsRoutingModule } from './travels-routing.module';
     MatIconModule,
     MatDialogModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
   declarations: [
     TravelsComponent,

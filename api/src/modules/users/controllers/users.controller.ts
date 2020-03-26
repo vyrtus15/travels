@@ -5,7 +5,7 @@ import { PageDto } from '../../../dto/page.dto';
 import { PageResult } from '../../../interfaces/pageResult.interface';
 import { ApiOperationFor, ApiPageOkResponse, ApiUserForbiddenResponse, ApiUserParam } from '../../../swagger/api.decorator';
 import { Authorize, Roles } from '../../auth/decorators/auth.decorator';
-import { AuthUser } from '../authorization/auth.decorator';
+import { AuthUser } from '../decorators/auth.decorator';
 import { UpdateUserDto } from '../dto/updateUser.dto';
 import { UserDto } from '../dto/user.dto';
 import { UsersService } from '../services/users.service';
@@ -19,12 +19,12 @@ export class UsersController {
     private readonly usersService: UsersService,
   ) { }
 
-  @ApiOperation({ description: 'Gets the details of the currently logged in user.' })
+  @ApiOperation({ description: 'Gets the details of the current user.' })
   @ApiOkResponse({ type: UserDto })
   @Get('me')
   public async getCurrent(@Request() req): Promise<UserDto> {
     if (!req.user) {
-      throw new Error('Request user not set. Ensure @Authorize() guard is configured in the pipeline.');
+      throw new Error('Request user not set.');
     }
 
     return await this.usersService.findOne(req.user.id);
@@ -32,7 +32,7 @@ export class UsersController {
 
   @ApiOperationFor('Gets a list of users.', RoleType.manager, RoleType.admin)
   @ApiPageOkResponse(UserDto)
-  @ApiForbiddenResponse({ description: 'Current user not a `moderator` or `admin`.' })
+  @ApiForbiddenResponse({ description: 'Current user not a `manager` or `admin`.' })
   @Get()
   @Roles(RoleType.manager, RoleType.admin)
   public async getUsers(@Query() filter: PageDto, @Request() request): Promise<PageResult<UserDto>> {
@@ -43,7 +43,7 @@ export class UsersController {
     return await this.usersService.find(filter, RoleType.user);
   }
 
-  @ApiOperation({ description: 'Updates user profile details.' })
+  @ApiOperation({ description: 'Updates user details.' })
   @ApiUserParam('id')
   @ApiOkResponse({ type: UserDto })
   @ApiUserForbiddenResponse()

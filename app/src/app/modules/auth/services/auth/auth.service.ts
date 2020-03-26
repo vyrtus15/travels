@@ -32,4 +32,7 @@ export class AuthService {
     return !!(this.auth && this.auth.accessToken);
   }
 
+  logout() {
+    this.save(null);
+  }
 }

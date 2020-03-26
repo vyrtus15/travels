@@ -50,7 +50,7 @@ describe('Users Controller', () => {
     expect(await controller.getUsers({} as PageDto, request)).toMatchObject({ items: usersList });
   });
 
-  it('should apply `user` role filter for a moderator', async () => {
+  it('should apply `user` role filter for a manager', async () => {
     const usersList = [createTestUser('a'), createTestUser('b'), createTestUser('c')];
     jest.spyOn(userService, 'find').mockImplementation(async () => ({ items: [...usersList] } as any));
 

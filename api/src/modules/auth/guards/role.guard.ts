@@ -12,26 +12,29 @@ export class RoleGuard implements CanActivate {
     const handlerRoles = this.reflector.get<RoleType[]>(RoleGuard.metadataKey, context.getHandler());
     const controllerRoles = this.reflector.get<RoleType[]>(RoleGuard.metadataKey, context.getClass());
 
+    // Allow access when no permission required
     if (this.isEmpty(handlerRoles) && this.isEmpty(controllerRoles)) {
       return true;
     }
 
     const request = context.switchToHttp().getRequest();
     const user: UserDto = request.user;
+    // Restrict acccess when user not present or does not have roles.
     if (!user || !Array.isArray(user.roles)) {
       return false;
     }
 
-    return this.matchRoles(handlerRoles, user.roles) &&
-      this.matchRoles(controllerRoles, user.roles);
+    const matchPermissions = this.matchRoles(handlerRoles, user.roles) && this.matchRoles(controllerRoles, user.roles);
+
+    return matchPermissions;
   }
 
-  private matchRoles(givenRoles: RoleType[], userRoles: RoleType[]) {
-    if (this.isEmpty(givenRoles)) {
+  private matchRoles(targetRoles: RoleType[], userRoles: RoleType[]) {
+    if (this.isEmpty(targetRoles)) {
       return true;
     }
 
-    return givenRoles.some(allowedRole => userRoles.indexOf(allowedRole) !== -1);
+    return targetRoles.some(allowedRole => userRoles.indexOf(allowedRole) !== -1);
   }
 
   private isEmpty<T>(array: T[]) {

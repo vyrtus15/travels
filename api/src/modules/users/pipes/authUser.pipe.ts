@@ -20,18 +20,18 @@ export class AuthUserPipe extends AbstractAuthPipe<string, Promise<UserDto>> {
     }
 
     const user = await this.userService.findOne(id);
-    if (this.isSelf(id)) {
-      // Allow user access to own record.
+    // Allow user access to own record.
+    if (this.isSelfUser(id)) {
       return user;
     }
 
+    // Admin can access any user record.
     if (this.isAdmin()) {
-      // Admin can access any user record.
       return user;
     }
 
-    if (this.isModerator()) {
-      // A `moderator` user can access only `user` records.
+    // A `manager` user can access only `user` records.
+    if (this.isManager()) {
       const isTargetAUser = user.roles?.length === 1 && user.roles[0] === RoleType.user;
       if (isTargetAUser) {
         return user;

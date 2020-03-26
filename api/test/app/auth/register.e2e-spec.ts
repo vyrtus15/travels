@@ -1,5 +1,5 @@
 import { default as axios } from 'axios';
-import { randomUser } from '../../helpers/user/randomUser';
+import { randomUser } from '../../helpers/user';
 import { createTestContext, destroyTestContext } from '../../setup';
 
 describe('/auth (e2e)', () => {
@@ -15,10 +15,10 @@ describe('/auth (e2e)', () => {
   describe('/register (POST)', () => {
     it.each([
       ['userName', null],
-      ['userName', 'test'], // userName must be a valid email
       ['firstName', null],
       ['lastName', null],
       ['password', null],
+      ['password', '123'], // password minLength 6
     ])('should validate when %s is %s', async (field, value) => {
       const data = randomUser();
       data[field] = value;

@@ -3,7 +3,7 @@ import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { mockEntity, mockFilteredQuery, mockQuery } from '../../../../test/helpers/utils.jest';
 import { SchemaNames } from '../../../common/schemas';
-import { QueryService } from '../../infrastructure/database/services/query.service';
+import { QueryService } from '../../database/services/query.service';
 import { SearchTravelDto } from '../dto/searchTravel.dto';
 import { TravelDto } from '../dto/travel.dto';
 import { TravelsService } from './travels.service';

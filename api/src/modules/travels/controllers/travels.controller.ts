@@ -4,9 +4,9 @@ import { RoleType } from '../../../common/roleType';
 import { PageResult } from '../../../interfaces/pageResult.interface';
 import { ApiPageOkResponse, ApiTravelParam, ApiTravelsForbiddenResponse, ApiUserParam } from '../../../swagger/api.decorator';
 import { Authorize, Roles } from '../../auth/decorators/auth.decorator';
-import { AuthOwnUser } from '../../users/authorization/auth.decorator';
+import { AuthOwnUserOrAdmin } from '../../users/decorators/auth.decorator';
 import { UserDto } from '../../users/dto/user.dto';
-import { AuthTravel } from '../authorization/authTravel.decorator';
+import { AuthTravel } from '../pipes/authTravel.decorator';
 import { AddTravelDto } from '../dto/addTravel.dto';
 import { SearchTravelDto } from '../dto/searchTravel.dto';
 import { TravelDto } from '../dto/travel.dto';
@@ -26,7 +26,7 @@ export class TravelsController {
   @ApiPageOkResponse(TravelDto)
   @ApiTravelsForbiddenResponse()
   @Get()
-  async search(@Query() filter: SearchTravelDto, @AuthOwnUser('user') user: UserDto): Promise<PageResult<TravelDto>> {
+  async search(@Query() filter: SearchTravelDto, @AuthOwnUserOrAdmin('user') user: UserDto): Promise<PageResult<TravelDto>> {
     return await this.travelsService.find(filter, user.id);
   }
 
@@ -35,7 +35,7 @@ export class TravelsController {
   @ApiCreatedResponse({ type: TravelDto })
   @ApiTravelsForbiddenResponse()
   @Post()
-  async create(@AuthOwnUser('user') user: UserDto, @Body() travel: AddTravelDto): Promise<TravelDto> {
+  async create(@AuthOwnUserOrAdmin('user') user: UserDto, @Body() travel: AddTravelDto): Promise<TravelDto> {
     const result = await this.travelsService.add(user.id, travel);
 
     return result;

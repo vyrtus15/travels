@@ -10,27 +10,27 @@ export abstract class AbstractAuthPipe<TIn, TOut> implements PipeTransform<TIn, 
     return !!this.request.user;
   }
 
-  protected isSelf(value) {
+  protected isSelfUser(value) {
     return this.request.user?.id === value;
   }
 
   protected isAdmin() {
-    return this.isInRole(RoleType.admin);
+    return this.hasRole(RoleType.admin);
   }
 
-  protected isModerator() {
-    return this.isInRole(RoleType.manager);
+  protected isManager() {
+    return this.hasRole(RoleType.manager);
   }
 
   protected isUser() {
-    return this.isInRole(RoleType.user);
+    return this.hasRole(RoleType.user);
   }
 
   protected throwForbidden() {
     throw new ForbiddenException();
   }
 
-  private isInRole(role: RoleType) {
+  private hasRole(role: RoleType) {
     return Array.isArray(this.request.user?.roles) &&
       this.request.user.roles.indexOf(role) !== -1;
   }

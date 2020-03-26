@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Document, DocumentQuery, Model } from 'mongoose';
-import { PageResult } from '../../../../interfaces/pageResult.interface';
-import { PageSearch } from '../../../../interfaces/pageSearch.interface';
+import { PageResult } from '../../../interfaces/pageResult.interface';
+import { PageSearch } from '../../../interfaces/pageSearch.interface';
 
 @Injectable()
 export class QueryService {

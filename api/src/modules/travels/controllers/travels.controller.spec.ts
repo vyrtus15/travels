@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TravelsService } from '../services/travels.service';
 import { TravelsController } from './travels.controller';
 import { PageDto } from '../../../dto/page.dto';
+import { SearchTravelDto } from '../dto/searchTravel.dto';
 
 describe('Travels Controller', () => {
   let controller: TravelsController;
@@ -31,7 +32,7 @@ describe('Travels Controller', () => {
   it('should search travels', async () => {
     const user: any = { id: 'test' };
 
-    await controller.search({} as PageDto, user);
+    await controller.search({} as SearchTravelDto, user);
 
     expect(travelsService.find).toBeCalledWith({}, user.id);
   });

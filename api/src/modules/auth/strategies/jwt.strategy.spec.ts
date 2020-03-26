@@ -23,7 +23,7 @@ describe('Jwt Strategy', () => {
   });
 
   it('should return the validated user', async () => {
-    const user: any = { userName: 'test' };
+    const user: any = { userName: '42' };
     jest.spyOn(authService, 'validateUser').mockImplementation(async () => user);
 
     expect(await jwtStrategy.validate({} as any)).toBe(user);

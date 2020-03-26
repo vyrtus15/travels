@@ -1,10 +1,10 @@
 import { ForbiddenException } from '@nestjs/common';
 import { RoleType } from '../../../common/roleType';
 import { UsersService } from '../services/users.service';
-import { AuthOwnUserPipe } from './authOwnUser.pipe';
+import { AuthUserPipe } from './authUser.pipe';
 
-describe('AuthOwnUser Pipe', () => {
-  let pipe: AuthOwnUserPipe;
+describe('AuthUser Pipe', () => {
+  let pipe: AuthUserPipe;
   let usersService: UsersService;
   let request: any;
 
@@ -13,7 +13,7 @@ describe('AuthOwnUser Pipe', () => {
     usersService = {
       findOne: jest.fn(),
     } as any;
-    pipe = new AuthOwnUserPipe(usersService, request);
+    pipe = new AuthUserPipe(usersService, request);
   });
 
   it('should throw when user not authenticated', async () => {
@@ -38,9 +38,27 @@ describe('AuthOwnUser Pipe', () => {
     expect(await pipe.transform(accessedUser.id, undefined)).toMatchObject(accessedUser);
   });
 
-  it('should throw when is `moderator` and access another user', async () => {
+  it('should return the `user` when is `manager`', async () => {
     const accessedUser: any = { id: 'userA', roles: [RoleType.user] };
-    request.user = { id: 'moderator', roles: [RoleType.manager] };
+    request.user = { id: 'manager', roles: [RoleType.manager] };
+
+    jest.spyOn(usersService, 'findOne').mockImplementation(async () => accessedUser);
+
+    expect(await pipe.transform(accessedUser.id, undefined)).toMatchObject(accessedUser);
+  });
+
+  it('should throw when is `manager` and access a non `user`', async () => {
+    const accessedUser: any = { id: 'userA', roles: [RoleType.manager] };
+    request.user = { id: 'manager', roles: [RoleType.manager] };
+
+    jest.spyOn(usersService, 'findOne').mockImplementation(async () => accessedUser);
+
+    await expect(pipe.transform(accessedUser.id, undefined)).rejects.toBeInstanceOf(ForbiddenException);
+  });
+
+  it('should throw when is `manager` and access a `user` without roles', async () => {
+    const accessedUser: any = { id: 'userA' };
+    request.user = { id: 'manager', roles: [RoleType.manager] };
 
     jest.spyOn(usersService, 'findOne').mockImplementation(async () => accessedUser);
 

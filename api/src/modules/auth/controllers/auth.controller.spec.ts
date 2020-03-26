@@ -28,7 +28,7 @@ describe('Auth Controller', () => {
     });
 
     it('should login', async () => {
-        const expectedResult: any = { accessToken: 'abc' };
+        const expectedResult: any = { accessToken: 'my-token' };
         jest.spyOn(authService, 'createToken').mockImplementation(async () => expectedResult);
 
         const actualResult = await controller.login({ user: {} });
@@ -36,8 +36,8 @@ describe('Auth Controller', () => {
         expect(actualResult).toBe(expectedResult);
     });
 
-    it('should login with request user', async () => {
-        const token: any = { accessToken: 'abc' };
+    it('should login with request credentials', async () => {
+        const token: any = { accessToken: 'my-token' };
         jest.spyOn(authService, 'createToken').mockImplementation(async () => token);
 
         const request = { user: {} };

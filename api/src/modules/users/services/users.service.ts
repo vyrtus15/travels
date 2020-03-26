@@ -7,15 +7,13 @@ import { SchemaNames } from '../../../common/schemas';
 import { PageDto } from '../../../dto/page.dto';
 import { PageResult } from '../../../interfaces/pageResult.interface';
 import { PageSearch } from '../../../interfaces/pageSearch.interface';
-import { QueryService } from '../../infrastructure/database/services/query.service';
+import { QueryService } from '../../database/services/query.service';
 import { UpdateUserDto } from '../dto/updateUser.dto';
 import { UserDto } from '../dto/user.dto';
 import { User } from '../schema/user.interface';
 
 @Injectable()
 export class UsersService {
-  public static readonly DEFAULT_SORT_FIELD = '-createdOn';
-
   constructor(
     @InjectModel(SchemaNames.User) private readonly userModel: Model<User>,
     private readonly queryService: QueryService,
@@ -37,7 +35,6 @@ export class UsersService {
     const filter: PageSearch = {
       ...pagination,
       condition,
-      sort: UsersService.DEFAULT_SORT_FIELD,
     };
 
     const page = await this.queryService.page(this.userModel, filter);
@@ -47,15 +44,9 @@ export class UsersService {
     }
   }
 
-  async setRoles(id: string, roles: RoleType[]) {
-    const entity = await this.findEntity(id);
-    entity.roles = [...new Set(roles)];
-
-    return this.serialize(await entity.save());
-  }
-
   async update(id: string, data: UpdateUserDto) {
     const entity = await this.findEntity(id);
+
     entity.firstName = data.firstName;
     entity.lastName = data.lastName;
 

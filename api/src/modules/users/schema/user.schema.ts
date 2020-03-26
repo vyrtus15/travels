@@ -12,12 +12,6 @@ export const UsersSchema = new mongoose.Schema<User>({
     default: uuid,
   },
 
-  createdOn: {
-    type: Date,
-    required: true,
-    default: Date.now,
-  },
-
   userName: {
     type: String,
     required: true,

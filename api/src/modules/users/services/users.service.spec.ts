@@ -4,7 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { mockEntity, mockQuery } from '../../../../test/helpers/utils.jest';
 import { RoleType } from '../../../common/roleType';
 import { SchemaNames } from '../../../common/schemas';
-import { QueryService } from '../../infrastructure/database/services/query.service';
+import { QueryService } from '../../database/services/query.service';
 import { UserDto } from '../dto/user.dto';
 import { UsersService } from './users.service';
 import { PageDto } from '../../../dto/page.dto';
@@ -50,11 +50,6 @@ describe('Users Service', () => {
   });
 
   describe('findOne()', () => {
-    it('should throw HttpException when user not found', async () => {
-      mockQuery(modelMock.findOne, null);
-      await expect(service.findOne('abc')).rejects.toBeInstanceOf(HttpException);
-    });
-
     it('should throw with NotFound status when user not found', async () => {
       mockQuery(modelMock.findOne, null);
       await expect(service.findOne('abc')).rejects.toMatchObject({ status: HttpStatus.NOT_FOUND });
@@ -67,12 +62,6 @@ describe('Users Service', () => {
       await service.findOne(id);
 
       expect(modelMock.findOne).toBeCalledWith({ id });
-    });
-
-    it('should should return a class instance', async () => {
-      mockQuery(modelMock.findOne, {});
-
-      expect(await service.findOne('abc')).toBeInstanceOf(UserDto);
     });
 
     it('should return the found user', async () => {
@@ -106,20 +95,9 @@ describe('Users Service', () => {
       await service.find({} as PageDto, RoleType.user);
       expect((queryService.page as jest.Mock).mock.calls[0][1].condition.roles).toMatchObject([RoleType.user]);
     });
-
-    it('should apply the default sorting', async () => {
-      await service.find({} as PageDto, RoleType.user);
-      expect((queryService.page as jest.Mock).mock.calls[0][1].sort).toBe(UsersService.DEFAULT_SORT_FIELD);
-    });
   });
 
   describe('update', () => {
-    it('should throw HttpException when user not found', async () => {
-      mockQuery(modelMock.findOne, null);
-      await expect(service.update('abc', { firstName: 'test', lastName: 'test' }))
-        .rejects.toBeInstanceOf(HttpException);
-    });
-
     it('should throw with NotFound status when user not found', async () => {
       mockQuery(modelMock.findOne, null);
       await expect(service.update('abc', { firstName: 'test', lastName: 'test' }))
@@ -143,23 +121,14 @@ describe('Users Service', () => {
     it('should return the updated entity', async () => {
       const initial = { firstName: 'john', lastName: 'doe' };
       const updated = { firstName: 'joe', lastName: 'dhoe' };
+
       mockQuery(modelMock.findOne, initial);
 
       expect(await service.update('abc', updated)).toMatchObject(updated);
     });
-
-    it('should return a class instance', async () => {
-      mockQuery(modelMock.findOne, {});
-      expect(await service.update('abc', {} as any)).toBeInstanceOf(UserDto);
-    });
   });
 
   describe('delete', () => {
-    it('should throw HttpException when user not found', async () => {
-      mockQuery(modelMock.findOne, null);
-      await expect(service.delete('abc')).rejects.toBeInstanceOf(HttpException);
-    });
-
     it('should throw with NotFound status when user not found', async () => {
       mockQuery(modelMock.findOne, null);
       await expect(service.delete('abc')).rejects.toMatchObject({ status: HttpStatus.NOT_FOUND });

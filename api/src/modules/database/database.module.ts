@@ -1,9 +1,9 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ConfigKeys } from '../../../common/constants';
-import { AuthModule } from '../../auth/authModule';
-import { UsersModule } from '../../users/users.module';
+import { ConfigKeys } from '../../common/constants';
+import { AuthModule } from '../auth/authModule';
+import { UsersModule } from '../users/users.module';
 import { QueryService } from './services/query.service';
 import { SeedService } from './services/seed.service';
 

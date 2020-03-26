@@ -1,20 +1,18 @@
 {
   "name": "travel-api",
   "version": "1.0.0",
-  "description": "",
   "author": "Radu Proca",
   "license": "",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
     "start": "nest start",
-    "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
+    "test:coverage": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "docker-compose -f ./test/docker-compose.yml up --build --force-recreate --renew-anon-volumes --abort-on-container-exit --exit-code-from travels-e2e-test",
     "test:e2e:run": "jest --config ./test/jest-e2e.json"

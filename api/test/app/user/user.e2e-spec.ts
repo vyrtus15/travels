@@ -1,15 +1,14 @@
 import { default as axios } from 'axios';
+import { RoleType } from '../../../src/common/roleType';
 import { TestUser, TestUserType, UserTestContext } from '../../helpers/interfaces';
-import { loginAsNewAdmin, loginAsNewManager, loginAsNewUser } from '../../helpers/user';
+import { loginAsNewAdmin, loginAsNewManager, loginAsNewUser, registerUser } from '../../helpers/user';
 import { extendedUserTestContext } from '../../helpers/user/context';
-import { registerUser } from '../../helpers/user/registerUser';
 import { createTestContext, destroyTestContext } from '../../setup';
 import { createAuthOptions } from '../../setup/axios';
-import { RoleType } from '../../../src/common/roleType';
 
 describe('/user (e2e)', () => {
   let user: TestUser;
-  let moderator: TestUser;
+  let manager: TestUser;
   let admin: TestUser;
   let userInRole: UserTestContext;
 
@@ -19,7 +18,7 @@ describe('/user (e2e)', () => {
     userInRole = await extendedUserTestContext();
 
     user = userInRole[TestUserType.asUser];
-    moderator = userInRole[TestUserType.asManager];
+    manager = userInRole[TestUserType.asManager];
     admin = userInRole[TestUserType.asAdmin];
 
   }, 60000);
@@ -49,10 +48,10 @@ describe('/user (e2e)', () => {
       expect(response.status).toBe(200);
     });
 
-    it('should not return admin and moderator accounts for a moderator', async () => {
-      // There should be at least one admin and one moderator created in the `beforeAll` hook above
-      // none of which should be visible by the moderator
-      const response = await axios.get(`user?limit=100`, createAuthOptions(moderator));
+    it('should not return admin and manager accounts for a manager', async () => {
+      // There should be at least one admin and one manager created in the `beforeAll` hook above
+      // none of which should be visible by the manager
+      const response = await axios.get(`user?limit=100`, createAuthOptions(manager));
 
       const usr = response.data.items.map(u => u.roles)
       const onlyUsers = usr.every(roles => roles.length === 1 && roles[0] === RoleType.user);
@@ -110,12 +109,14 @@ describe('/user (e2e)', () => {
       TestUserType.asUser,
       TestUserType.asManager,
       TestUserType.asAdmin,
-    ])('should update own profile data (as %s)', async (role) => {
+    ])('should update own user (as %s)', async (role) => {
       const newData = { firstName: 'John', lastName: 'Doe' };
+
       let response = await axios.put(`user/${userInRole[role].id}`, newData, createAuthOptions(userInRole[role]));
       expect(response.status).toBe(200);
 
       response = await axios.get('user/me', createAuthOptions(userInRole[role]));
+
       expect(response.status).toBe(200);
       expect(response.data).toMatchObject(newData);
     });
@@ -162,8 +163,6 @@ describe('/user (e2e)', () => {
         case TestUserType.asAdmin:
           newUser = await loginAsNewAdmin();
           break;
-        default:
-          throw new Error('A new unsupported role has been added to the test.');
       }
 
       let response = await axios.delete(`user/${newUser.id}`, createAuthOptions(newUser));
@@ -186,7 +185,7 @@ describe('/user (e2e)', () => {
 
     it.each([
       [TestUserType.asManager, TestUserType.asUser],
-      [TestUserType.asAdmin, TestUserType.asAnotherUser], // we use `anotherUser` as `user` might already be deleted by moderator
+      [TestUserType.asAdmin, TestUserType.asAnotherUser],
       [TestUserType.asAdmin, TestUserType.asManager],
       [TestUserType.asAdmin, TestUserType.asAnotherAdmin],
     ])('should allow a %s to delete %s', async (roleA, roleB) => {

@@ -32,6 +32,7 @@ export class AuthTravelPipe extends AbstractAuthPipe<[string, string], Promise<T
       return travel;
     }
 
+    // An user has access only to his own travels
     if (travel.userId === this.request.user.id) {
       return travel;
     }

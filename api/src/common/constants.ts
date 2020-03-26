@@ -21,6 +21,9 @@ export const ConfigKeys = {
 
   // Current app hosted path
   httpAbsolutePath: 'HTTP_ABSOLUTE_PATH',
+
+  // Cors options
+  corsWhitelist: 'CORS_WHITELIST',
 };
 
 export const ProductionEnvironment = 'production';

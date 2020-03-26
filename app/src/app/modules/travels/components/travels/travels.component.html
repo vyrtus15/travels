@@ -1,23 +1,30 @@
 <div class="no-print">
     <h1 class="flex content-center">Travels</h1>
-    <button
-        mat-raised-button
-        color="primary"
-        class="add-button"
-        (click)="add()"
-    >
-        <i class="material-icons">add</i>
-        Add travel
-    </button>
-    <button
-        mat-raised-button
-        color="primary"
-        class="add-button"
-        (click)="print()"
-    >
-        <i class="material-icons">print</i>
-        Print next month
-    </button>
+
+    <div class="flex">
+        <button
+            mat-raised-button
+            color="primary"
+            class="button-spacing"
+            (click)="add()"
+        >
+            <i class="material-icons">add</i>
+            Add travel
+        </button>
+
+        <button
+            mat-raised-button
+            color="primary"
+            class="button-spacing"
+            (click)="print()"
+        >
+            <i class="material-icons">print</i>
+            Print next month
+        </button>
+
+        <app-logout class="button-spacing logout-button"></app-logout>
+    </div>
+
 </div>
 
 <div class="no-print spacing-10">
