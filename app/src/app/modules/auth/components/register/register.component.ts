@@ -34,7 +34,7 @@ export class RegisterComponent {
 
     this.registerService.register(this.registerForm.value)
       .subscribe(() => {
-        this.snackBar.open('Account created, please log in.');
+        this.snackBar.open('Account created, please log in.', null, { duration: 2500 });
         this.router.navigate(['/']);
       }, () => {
         this.registerError = true;
