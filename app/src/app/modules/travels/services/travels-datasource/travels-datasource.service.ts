@@ -6,6 +6,9 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { TravelFilter, TravelResponse } from '../../interfaces/travel.interface';
 import { TravelsService } from '../travels/travels.service';
 
+/**
+ * Class used to create a source of travels to be displayed for users.
+ */
 @Injectable({
   providedIn: 'root'
 })

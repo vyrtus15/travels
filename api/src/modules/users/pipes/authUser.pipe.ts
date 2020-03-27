@@ -5,6 +5,13 @@ import { AbstractAuthPipe } from '../../../pipes/AbstractAuth.pipe';
 import { UserDto } from '../dto/user.dto';
 import { UsersService } from '../services/users.service';
 
+/**
+ * Pipe used to perform auth for users who should access user entity, based on Roles.
+ * To match one of the following rules:
+ * - current user accesses his own user record
+ * - current user is `admin`
+ * - current user is `manager` and accessed user is `user`
+ */
 @Injectable({ scope: Scope.REQUEST })
 export class AuthUserPipe extends AbstractAuthPipe<string, Promise<UserDto>> {
   constructor(

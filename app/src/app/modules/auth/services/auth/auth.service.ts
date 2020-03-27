@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { StorageService } from '../../../../services/storage/storage.service';
 import { Auth } from '../../interfaces/auth.interface';
 
+/**
+ * Class used to store current user authentication  (accessToken)
+ */
 @Injectable({
   providedIn: 'root'
 })

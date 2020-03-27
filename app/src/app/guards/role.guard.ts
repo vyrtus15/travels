@@ -4,6 +4,9 @@ import { RoleType, User } from '../modules/auth/interfaces/user.interface';
 import { AuthService } from '../modules/auth/services/auth/auth.service';
 import { UserService } from '../modules/auth/services/user/user.service';
 
+/**
+ * Class used to check if user is authenticated and has role permission to access a specific page
+ */
 @Injectable({
   providedIn: 'root',
 })

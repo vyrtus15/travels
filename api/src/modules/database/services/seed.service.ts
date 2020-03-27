@@ -7,6 +7,9 @@ import { RoleType } from '../../../common/roleType';
 import { AuthService } from '../../auth/services/auth.service';
 import { User } from '../../users/schema/user.interface';
 
+/**
+ * Service used to seed database on app init.
+ */
 @Injectable()
 export class SeedService {
   private readonly logger = new Logger('Database.SeedService');

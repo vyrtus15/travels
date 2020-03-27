@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/services/http/http.service';
 import { UserItem } from '../../interfaces/users.interface';
 
+/**
+ * Class used to perform users actions & all related operations.
+ */
 @Injectable({
   providedIn: 'root'
 })

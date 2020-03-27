@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/services/http/http.service';
 import { Login } from '../../interfaces/login.interface';
 
+/**
+ * Class used to perform login operation & all related stuffs.
+ */
 @Injectable({
   providedIn: 'root'
 })

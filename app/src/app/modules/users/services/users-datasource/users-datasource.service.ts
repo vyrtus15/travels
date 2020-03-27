@@ -4,6 +4,9 @@ import { merge, Observable, of } from 'rxjs';
 import { catchError, startWith, switchMap } from 'rxjs/operators';
 import { UsersService } from '../users/users.service';
 
+/**
+ * Class used to create a source of users to be displayed.
+ */
 @Injectable({
   providedIn: 'root'
 })

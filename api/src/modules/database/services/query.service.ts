@@ -3,6 +3,9 @@ import { Document, DocumentQuery, Model } from 'mongoose';
 import { PageResult } from '../../../interfaces/pageResult.interface';
 import { PageSearch } from '../../../interfaces/pageSearch.interface';
 
+/**
+ * Service used to perform database queries.
+ */
 @Injectable()
 export class QueryService {
 

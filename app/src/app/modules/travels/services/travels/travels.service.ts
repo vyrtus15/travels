@@ -5,6 +5,9 @@ import { map } from 'rxjs/operators';
 import { HttpService } from 'src/app/services/http/http.service';
 import { MappedTravels, TravelResponse, TravelsItem } from '../../interfaces/travel.interface';
 
+/**
+ * Class used to perform travels actions & all related operations.
+ */
 @Injectable({
   providedIn: 'root'
 })

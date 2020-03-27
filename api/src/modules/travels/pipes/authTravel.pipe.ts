@@ -4,6 +4,9 @@ import { AbstractAuthPipe } from '../../../pipes/AbstractAuth.pipe';
 import { TravelDto } from '../dto/travel.dto';
 import { TravelsService } from '../services/travels.service';
 
+/**
+ * Pipe used to perform auth for users who should access to travel, based on Roles.
+ */
 @Injectable({ scope: Scope.REQUEST })
 export class AuthTravelPipe extends AbstractAuthPipe<[string, string], Promise<TravelDto>> {
   constructor(

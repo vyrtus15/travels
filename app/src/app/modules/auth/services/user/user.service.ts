@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/services/http/http.service';
 import { User } from '../../interfaces/user.interface';
 
+/**
+ * Class used to store current user details, if user is not stored fetch it from the API.
+ */
 @Injectable({
   providedIn: 'root'
 })

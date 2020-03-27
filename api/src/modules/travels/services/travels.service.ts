@@ -12,6 +12,9 @@ import { TravelDto } from '../dto/travel.dto';
 import { UpdateTravelDto } from '../dto/updateTravel.dto';
 import { Travel } from '../schema/travel.interface';
 
+/**
+ * Service used to perform travels CRUD operations.
+ */
 @Injectable()
 export class TravelsService {
   public static readonly DEFAULT_SORT_FIELD = 'startDate';
