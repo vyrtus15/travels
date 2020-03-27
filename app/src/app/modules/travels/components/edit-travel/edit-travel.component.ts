@@ -57,7 +57,7 @@ export class EditTravelComponent implements OnInit {
   }
 
   private handleSuccess() {
-    this.matSnackBar.open('Travel updated', null, { duration: 2500 });
+    this.matSnackBar.open('Travel updated', null, { duration: 3500 });
     this.back();
   }
 

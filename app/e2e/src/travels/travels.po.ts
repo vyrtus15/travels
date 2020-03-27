@@ -8,7 +8,7 @@ export class TravelsPage {
   }
 
   getTitle() {
-    return getElementByCss('app-travels > div:nth-child(1) > h1').getText() as Promise<string>;
+    return getElementByCss('app-travels app-header mat-toolbar-row > span:first-child').getText() as Promise<string>;
   }
 
   getFirstTravelDetails() {

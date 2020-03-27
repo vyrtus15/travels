@@ -50,10 +50,19 @@ body {
 
 @media print {
   .no-print {
-    display: none;
+    display: none !important;
   }
 
   .print-only {
     display: block;
+  }
+}
+
+table {
+  th {
+    &.action--column {
+      width: 50px;
+      text-align: center;
+    }
   }
 }

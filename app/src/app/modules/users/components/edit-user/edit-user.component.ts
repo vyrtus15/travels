@@ -53,7 +53,7 @@ export class EditUserComponent implements OnInit {
   }
 
   private handleSuccess() {
-    this.matSnackBar.open('User updated', null, { duration: 2500 });
+    this.matSnackBar.open('User updated', null, { duration: 3500 });
     this.back();
   }
 

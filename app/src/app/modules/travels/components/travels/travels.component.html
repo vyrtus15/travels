@@ -1,7 +1,7 @@
-<div class="no-print">
-    <h1 class="flex content-center">Travels</h1>
+<app-header title="Travels"></app-header>
 
-    <div class="flex">
+<div class="no-print">
+    <div class="actions--container">
         <button
             mat-raised-button
             color="primary"
@@ -21,8 +21,6 @@
             <i class="material-icons">print</i>
             Print next month
         </button>
-
-        <app-logout class="button-spacing logout-button"></app-logout>
     </div>
 
 </div>
@@ -147,7 +145,7 @@
                 mat-cell
                 *matCellDef="let row"
             >
-                {{row.daysLeft}}
+                {{row.daysLeft > 0 ? row.daysLeft : '-'}}
             </td>
         </ng-container>
 
@@ -170,6 +168,7 @@
             <th
                 mat-header-cell
                 *matHeaderCellDef
+                class="action--column"
             >
                 Edit
             </th>
@@ -187,6 +186,7 @@
             <th
                 mat-header-cell
                 *matHeaderCellDef
+                class="action--column"
             >
                 Remove
             </th>
@@ -224,7 +224,7 @@
 
 <div class="print-only">
     <div>
-        <h1 class="flex content-center">Travels</h1>
+        <h1 class="flex content-center">Travel plan for next month</h1>
     </div>
     <table
         mat-table
@@ -288,7 +288,7 @@
                 mat-cell
                 *matCellDef="let element"
             >
-                {{element.daysLeft}}
+                {{element.daysLeft > 0 ? element.daysLeft : '-'}}
             </td>
         </ng-container>
 

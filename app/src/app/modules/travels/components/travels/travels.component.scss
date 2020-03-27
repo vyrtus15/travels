@@ -1,8 +1,16 @@
+.actions {
+  &--container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
 .filters {
   &--container {
     display: flex;
+    flex-wrap: wrap;
   }
-  &--filter {
+  &--filter:not(:first-child) {
     margin-left: 15px;
   }
 }

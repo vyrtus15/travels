@@ -62,7 +62,7 @@ export class TravelsService {
     const today = moment();
 
     const daysLeft = tripDate.diff(today, 'days');
-    return daysLeft >= 0 ? daysLeft : 0;
+    return daysLeft;
   }
 
   private prettyDate(date: Date) {

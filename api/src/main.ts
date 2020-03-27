@@ -15,7 +15,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   app.use(cors({
-    origin: configService.get(ConfigKeys.corsWhitelist),
+    origin: configService.get<string>(ConfigKeys.corsWhitelist).split(','),
   }));
 
   app.use(helmet());

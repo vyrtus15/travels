@@ -41,7 +41,7 @@ export class AddTravelComponent {
   }
 
   private handleSuccess() {
-    this.matSnackBar.open('Travel created', null, { duration: 2500 });
+    this.matSnackBar.open('Travel created', null, { duration: 3500 });
     this.back();
   }
 
